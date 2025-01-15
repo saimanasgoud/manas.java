@@ -1,0 +1,108 @@
+public class twistedprime{
+	public static void main(String[] args){
+		
+		second sd = new second();
+		String src = twisted_prime(12);
+		System.out.println(src);
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+class second{
+	String twisted_prime(int num){
+	int count = 0, rev = 0, rem = 0, num = temp, count1 = 0;
+		for(int start = 1; start <= num/2; start++){
+			count++;
+			break;
+		}
+	num = temp;
+		
+	for(;num != 0; num /= 10){
+		rem = num % 10; 
+		count++;
+	}
+	
+	if(num == rem)
+		return temp + " twisted prime";
+	else
+		return temp + " not a twisted prime";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

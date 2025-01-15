@@ -1,0 +1,17 @@
+public class factofrecursion{
+	public static void main(String args[]){
+		
+		fact rial = new fact();
+		  
+		
+		
+		}
+class fact{
+	
+	void factorsnumber(int num){
+		for(int start = 1; start <= num; start++){
+			
+		}
+	}
+}
+
