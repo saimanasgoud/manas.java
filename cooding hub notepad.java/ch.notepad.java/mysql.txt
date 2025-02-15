@@ -1,0 +1,539 @@
+Microsoft Windows [Version 10.0.26100.2894]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.41 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ^C
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| department         |
+| employee           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.02 sec)
+
+mysql> select * from employee;
+ERROR 1046 (3D000): No database selected
+mysql> use department;
+Database changed
+mysql> use employee;
+Database changed
+mysql> select * from employee;
++------+--------+-------------------+------------+------+--------------+------+------+-------+--------+-------+--------------+--------+
+| e_id | e_name | e_mail            | e_mobile   | age  | basic_salary | e_ta | e_da | e_hra | salary | e_tax | final_salary | gender |
++------+--------+-------------------+------------+------+--------------+------+------+-------+--------+-------+--------------+--------+
+|    2 | xy     | saigoud@gmail.com | 8185984339 |   23 |        30000 | 3000 | 1500 |  2100 |  36600 |  5400 |        31200 |        |
++------+--------+-------------------+------------+------+--------------+------+------+-------+--------+-------+--------------+--------+
+1 row in set (0.04 sec)
+
+mysql> select * from department;
+ERROR 1146 (42S02): Table 'employee.department' doesn't exist
+mysql> drop employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> drop database employee;
+Query OK, 3 rows affected (0.11 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| department         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use department;
+Database changed
+mysql> select * from department;
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+|       1 | HR        |
+|       2 | IT        |
+|       3 | FINANCE   |
+|       4 | MARKETING |
++---------+-----------+
+4 rows in set (0.03 sec)
+
+mysql> create table employee
+    -> (
+    -> emp_id int primary key auto_increment not null,
+    -> name varchar(22) not null,
+    -> id int not null,
+    -> foreign key (id) department(dept^Cd),
+mysql> create table employee
+    -> (
+    -> emp_id int primary key auto_increment not null,
+    -> name varchar(22) not null,
+    -> id int not null,
+    -> foreign key (id) department(dept_id),
+    -> salary int not null,
+    -> date_of_birth date not null
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'department(dept_id),
+salary int not null,
+date_of_birth date not null
+)' at line 6
+mysql> create table employee
+    -> (
+    -> emp_id int primary key auto_increment not null,
+    -> name varchar(22) not null,
+    -> id int not null,
+    -> foreign key (id) references department(dept_id),
+    -> salary int not null,
+    -> date_of_birth date not null
+    -> );
+ERROR 1050 (42S01): Table 'employee' already exists
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| department         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> deleat table employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'deleat table employee' at line 1
+mysql> deleat table employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'deleat table employee' at line 1
+mysql> truncate table employee;
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> create table employee
+    -> (
+    -> emp_id int primary key auto_increment not null,
+    -> name varchar(22) not null,
+    -> id int not null,
+    -> foreign key (id) references department(dept_id),
+    -> salary int not null,
+    -> date_of_birth date not null
+    -> );
+ERROR 1050 (42S01): Table 'employee' already exists
+mysql> select * from employee;
+Empty set (0.00 sec)
+
+mysql> explain employee;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| emp_id       | int         | NO   | PRI | NULL    |       |
+| name         | varchar(45) | NO   |     | NULL    |       |
+| id           | int         | NO   | MUL | NULL    |       |
+| salary       | int         | NO   |     | NULL    |       |
+| joining_date | date        | NO   |     | NULL    |       |
+| Gender       | varchar(12) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> drop table employee;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> explain employee;
+ERROR 1146 (42S02): Table 'department.employee' doesn't exist
+mysql> create table employee
+    -> (
+    -> emp_id int primary key auto_increment not null,
+    -> name varchar(22) not null,
+    -> id int not null,
+    -> foreign key (id) references department(dept_id),
+    -> salary int not null,
+    -> date_of_birth date not null
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into employee (name, id, salary, date_of_birth)values
+    -> ('Rama krishna', 1, 50000, '2023-05-10'),
+    -> ('Sreeja', 2, 60000, '2022-08-15'),
+    -> ('Murali krishna', 3, 40000, '2021-11-20'),
+    -> ('Pawan', 2, 55000, '2022-07-11'),
+    -> ('sailaja', 4, 48000, '2022-07-12')
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 7
+mysql> insert into employee (name, id, salary, date_of_birth)values
+    -> ('Rama krishna', 1, 50000, '2023-05-10'),
+    -> ('Sreeja', 2, 60000, '2022-08-15'),
+    -> ('Murali krishna', 3, 40000, '2021-11-20'),
+    -> ('Pawan', 2, 55000, '2022-07-11'),
+    -> ('sailaja', 4, 48000, '2022-07-12');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select*from employee;
++--------+----------------+----+--------+---------------+
+| emp_id | name           | id | salary | date_of_birth |
++--------+----------------+----+--------+---------------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    |
++--------+----------------+----+--------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee add column Gender varchar(22) where emp_id = 1, 3, 4 as 'male';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where emp_id = 1, 3, 4 as 'male'' at line 1
+mysql> alter table employee add column Gender varchar(22);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update employee set Gender = 'mail' where emp_id = (1, 3, 4);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> update employee set Gender = 'mail' where emp_id in (1, 3, 4);
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+
+| emp_id | name           | id | salary | date_of_birth | Gender |
++--------+----------------+----+--------+---------------+--------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | mail   |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | NULL   |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | mail   |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | mail   |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | NULL   |
++--------+----------------+----+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee set Gender = case where emp_id in (1, 3, 4) then 'mail' else femail;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where emp_id in (1, 3, 4) then 'mail' else femail' at line 1
+mysql> update employee set Gender = case where emp_id in (1, 3, 4) then 'mail' else femail end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where emp_id in (1, 3, 4) then 'mail' else femail end' at line 1
+mysql> update employee set Gender = case where emp_id in (1, 3, 4) then 'mail' else 'female' end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where emp_id in (1, 3, 4) then 'mail' else 'female' end' at line 1
+mysql> update employee set Gender = case when emp_id in (1, 3, 4) then 'mail' else 'female' end;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 5  Changed: 2  Warnings: 0
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+
+| emp_id | name           | id | salary | date_of_birth | Gender |
++--------+----------------+----+--------+---------------+--------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | mail   |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | mail   |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | mail   |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female |
++--------+----------------+----+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee set Gender = case when emp_id in (1, 3, 4) then 'male' else 'female' end;
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 5  Changed: 3  Warnings: 0
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+
+| emp_id | name           | id | salary | date_of_birth | Gender |
++--------+----------------+----+--------+---------------+--------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | male   |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female |
++--------+----------------+----+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> set transation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> start transation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'transation' at line 1
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> savapoint sp1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'savapoint sp1' at line 1
+mysql> savepoint sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update employee set gender = 'femail' where id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from employee;
++--------+----------------+----+--------+---------------+--------+
+| emp_id | name           | id | salary | date_of_birth | Gender |
++--------+----------------+----+--------+---------------+--------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | femail |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female |
++--------+----------------+----+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> savepoint sp2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update employee set gender = 'male' where id = 4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> savepoint sp3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update employee set gender = 'sp3' where id = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> savepoint sp4;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update employee set gender = 'sp4' where id = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from employee;
++--------+----------------+----+--------+---------------+--------+
+| emp_id | name           | id | salary | date_of_birth | Gender |
++--------+----------------+----+--------+---------------+--------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | sp4    |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | sp3    |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | male   |
++--------+----------------+----+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> rollback to savepoint sp4;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select* from employee;
++--------+----------------+----+--------+---------------+--------+
+| emp_id | name           | id | salary | date_of_birth | Gender |
++--------+----------------+----+--------+---------------+--------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | femail |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | sp3    |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | male   |
++--------+----------------+----+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> rollback to savepoint sp1;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select* from employee;
++--------+----------------+----+--------+---------------+--------+
+| emp_id | name           | id | salary | date_of_birth | Gender |
++--------+----------------+----+--------+---------------+--------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | male   |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female |
++--------+----------------+----+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee add column tax double generated always 18/100 * salary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '18/100 * salary' at line 1
+mysql> alter table employee add column tax double generated always (18/100) * salary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(18/100) * salary' at line 1
+mysql> alter table employee add column tax double generated always as (18/100) * salary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* salary' at line 1
+mysql> alter table employee add column tax double generated always as (18/100) * salary stored;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* salary stored' at line 1
+mysql> alter table employee add column tax double generated always as (18/100) * salary stored;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* salary stored' at line 1
+mysql> alter table employee add column tax double generated always as salary * 18/100 stored;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary * 18/100 stored' at line 1
+mysql> alter table employee add column tax double generated always as salary * (18/100) stored;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary * (18/100) stored' at line 1
+mysql> alter table employee add column tax double generated always as (salary * 18)/100 stored;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '/100 stored' at line 1
+mysql> alter table employee add column tax double generated always as salary * 18/100 stored;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary * 18/100 stored' at line 1
+mysql> alter table employee add column tax double generated always as ((salary * 18)/100) stored;
+Query OK, 5 rows affected (0.13 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+-------+
+| emp_id | name           | id | salary | date_of_birth | Gender | tax   |
++--------+----------------+----+--------+---------------+--------+-------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | male   |  9000 |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female | 10800 |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   |  7200 |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |  9900 |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female |  8640 |
++--------+----------------+----+--------+---------------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee add column finance double generated always as salary * (15/100) stored;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary * (15/100) stored' at line 1
+mysql> alter table employee add column finance double generated always as salary * (15/100) stored;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary * (15/100) stored' at line 1
+mysql> alter table employee add column finance double generated always as (salary * (15/100)) stored;
+Query OK, 5 rows affected (0.20 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+-------+---------+
+| emp_id | name           | id | salary | date_of_birth | Gender | tax   | finance |
++--------+----------------+----+--------+---------------+--------+-------+---------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | male   |  9000 |    7500 |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female | 10800 |    9000 |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   |  7200 |    6000 |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |  9900 |    8250 |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female |  8640 |    7200 |
++--------+----------------+----+--------+---------------+--------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> delete employee where id = 101, 102;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where id = 101, 102' at line 1
+mysql> set transaction;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> set transation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> start transation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'transation' at line 1
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> savepoint sp09;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete table employee where emp_id = 1, 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table employee where emp_id = 1, 2' at line 1
+mysql> delete from employee where emp_id in (1, 2);
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+------+---------+
+| emp_id | name           | id | salary | date_of_birth | Gender | tax  | finance |
++--------+----------------+----+--------+---------------+--------+------+---------+
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   | 7200 |    6000 |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   | 9900 |    8250 |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female | 8640 |    7200 |
++--------+----------------+----+--------+---------------+--------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> rollback to savepoint sp09;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+-------+---------+
+| emp_id | name           | id | salary | date_of_birth | Gender | tax   | finance |
++--------+----------------+----+--------+---------------+--------+-------+---------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | male   |  9000 |    7500 |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female | 10800 |    9000 |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   |  7200 |    6000 |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |  9900 |    8250 |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female |  8640 |    7200 |
++--------+----------------+----+--------+---------------+--------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where salary < 55000;
++--------+----------------+----+--------+---------------+--------+------+---------+
+| emp_id | name           | id | salary | date_of_birth | Gender | tax  | finance |
++--------+----------------+----+--------+---------------+--------+------+---------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | male   | 9000 |    7500 |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   | 7200 |    6000 |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female | 8640 |    7200 |
++--------+----------------+----+--------+---------------+--------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> rollback to savepoint sp09;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+-------+---------+
+| emp_id | name           | id | salary | date_of_birth | Gender | tax   | finance |
++--------+----------------+----+--------+---------------+--------+-------+---------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | male   |  9000 |    7500 |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female | 10800 |    9000 |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   |  7200 |    6000 |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |  9900 |    8250 |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female |  8640 |    7200 |
++--------+----------------+----+--------+---------------+--------+-------+---------+
+5 rows in set (0.00 sec)
+
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+-------+---------+
+| emp_id | name           | id | salary | date_of_birth | Gender | tax   | finance |
++--------+----------------+----+--------+---------------+--------+-------+---------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | male   |  9000 |    7500 |
+|      2 | Sreeja         |  2 |  60000 | 2022-08-15    | female | 10800 |    9000 |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   |  7200 |    6000 |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   |  9900 |    8250 |
+|      5 | sailaja        |  4 |  48000 | 2022-07-12    | female |  8640 |    7200 |
++--------+----------------+----+--------+---------------+--------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> ^C
+mysql> delete from employee where gender = 'female';
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from employee;
++--------+----------------+----+--------+---------------+--------+------+---------+
+| emp_id | name           | id | salary | date_of_birth | Gender | tax  | finance |
++--------+----------------+----+--------+---------------+--------+------+---------+
+|      1 | Rama krishna   |  1 |  50000 | 2023-05-10    | male   | 9000 |    7500 |
+|      3 | Murali krishna |  3 |  40000 | 2021-11-20    | male   | 7200 |    6000 |
+|      4 | Pawan          |  2 |  55000 | 2022-07-11    | male   | 9900 |    8250 |
++--------+----------------+----+--------+---------------+--------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> delete from employee where gender in 'female';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''female'' at line 1
+mysql> truncate employee;
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> select * from employee;
+Empty set (0.00 sec)
+
+mysql> rollback to savepoint sp09;
+ERROR 1305 (42000): SAVEPOINT sp09 does not exist
+mysql> delete employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> delete from employee;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| department         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from department;
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+|       1 | HR        |
+|       2 | IT        |
+|       3 | FINANCE   |
+|       4 | MARKETING |
++---------+-----------+
+4 rows in set (0.00 sec)
+
+mysql>
