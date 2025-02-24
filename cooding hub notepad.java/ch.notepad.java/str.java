@@ -1,6 +1,6 @@
 //print starting letter 
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "vital information required under sizes";
@@ -26,7 +26,7 @@
 
 //print inverse of odd string
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "Hello all Good Morning";
@@ -41,7 +41,7 @@
 
 //dublicant elements of the array...
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "Hello all Good Morning";
@@ -60,7 +60,7 @@
 	}
 }*/
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "abc";
@@ -72,12 +72,12 @@
 			}
 		}
 	}
-}*/
+}
 
 
 //how many char in the string...
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "hello all good morning";
@@ -92,7 +92,7 @@
 
 //Higest repeated char (dublicant..)in the string...
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "hello all good morning";
@@ -113,7 +113,7 @@
 
 //print the vowels in each and every sub_string...
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "hello all good morning";
@@ -147,7 +147,7 @@
 
 //count all the sub_string count...
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "hello all good morning";
@@ -160,7 +160,7 @@
 }*/
 		//check each substring is pallindrom or not...
 
-/*class str{
+/class str{
 	public static void main(String args[]){
 		
 	String s = "madam arora teacher malayalam";
@@ -181,7 +181,7 @@
 
 //to print the assige values or numbers ...
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "a10b20c9";
@@ -210,7 +210,7 @@
 
 // how many times the character is repeated count....
 
-/*class str{
+class str{
 	public static void main(String args[]){
 		
 	String s = "aaaaabbbbcccdd";
